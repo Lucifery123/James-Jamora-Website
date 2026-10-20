@@ -181,19 +181,30 @@ body::before {
 .thumb.cert img { object-fit: contain; background: #13131b; padding: 6px; }
 .thumb.cert:hover img { transform: none; }
 
-/* Scroll reveal: rows and headings animate in as they enter the view (only when JS runs and motion is allowed) */
-@keyframes rv-up { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
-@keyframes rv-left { from { opacity: 0; transform: translateX(-44px); } to { opacity: 1; transform: none; } }
-@keyframes rv-right { from { opacity: 0; transform: translateX(44px); } to { opacity: 1; transform: none; } }
-@keyframes rv-zoom { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
-@keyframes rv-text { from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(14px); } to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; } }
-.js-reveal .reveal { opacity: 0; animation-fill-mode: both; animation-duration: .85s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); animation-delay: var(--d, 0s); }
-.js-reveal .reveal.is-in.r-up { animation-name: rv-up; }
-.js-reveal .reveal.is-in.r-left { animation-name: rv-left; }
-.js-reveal .reveal.is-in.r-right { animation-name: rv-right; }
-.js-reveal .reveal.is-in.r-zoom { animation-name: rv-zoom; }
-.js-reveal .reveal.is-in.r-text { animation-name: rv-text; animation-duration: 1s; }
-@media (prefers-reduced-motion: reduce) { .js-reveal .reveal { opacity: 1 !important; animation: none !important; } }
+/* Motion: scroll reveal in both directions, hero intro, button ripple, nav magnet. Runs only when JS runs and motion is allowed. */
+.js-reveal .reveal {
+  opacity: 0;
+  translate: 0 34px;
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), translate .8s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), scale .8s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), clip-path .9s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), border-color .25s ease, transform .25s ease;
+}
+.js-reveal .reveal.r-left { translate: -44px 0; }
+.js-reveal .reveal.r-right { translate: 44px 0; }
+.js-reveal .reveal.r-zoom { scale: .92; }
+.js-reveal .reveal.r-text { translate: 0 14px; clip-path: inset(0 0 100% 0); }
+.js-reveal .reveal.is-in { opacity: 1; translate: 0 0; scale: 1; clip-path: inset(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) { .js-reveal .reveal { opacity: 1 !important; translate: none !important; scale: none !important; clip-path: none !important; transition: none !important; } }
+
+/* Buttons: lift on hover, press down on click, ripple from the click point */
+.btn { position: relative; overflow: hidden; transition: transform .25s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, opacity .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(91, 91, 247, .75); }
+.btn:active { transform: translateY(0) scale(.96); transition-duration: .08s; }
+.ripple { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: rgba(255, 255, 255, .55); transform: scale(0); pointer-events: none; animation: ripple .65s ease-out forwards; }
+@keyframes ripple { to { transform: scale(16); opacity: 0; } }
+
+/* Nav: links lean toward the cursor as it gets close, with a sliding underline */
+.nav-links a { position: relative; display: inline-block; transition: color .2s, translate .25s ease-out, scale .25s ease-out; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left center; transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+.nav-links a:hover::after { transform: scaleX(1); }
 .contact-form { width: 100%; max-width: 560px; margin: 0 auto; display: grid; gap: 14px; text-align: left; background: var(--surface-low); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 20px; }
 .contact-form[hidden] { display: none; }
 .contact-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
@@ -662,32 +673,62 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       if (show) { var firstField = emailPanel.querySelector('input'); if (firstField) firstField.focus(); }
     });
   }
-  // Scroll reveal: each row/card enters from a different direction, staggered by its position in its row
+  // Motion: scroll reveal both ways, hero intro, button ripple, nav magnet
   (function () {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || !('IntersectionObserver' in window)) return;
-    document.documentElement.classList.add('js-reveal');
-    var dirs = ['r-up', 'r-left', 'r-right', 'r-zoom'];
-    var targets = document.querySelectorAll('.section-head, .grid > *, .cta-panel > *, .tools > *');
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        io.unobserve(entry.target);
+    var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (reduce) return;
+
+    // Rows, cards, headings and the hero animate in when they enter the view, and out again when they leave
+    if ('IntersectionObserver' in window) {
+      document.documentElement.classList.add('js-reveal');
+      var dirs = ['r-up', 'r-left', 'r-right', 'r-zoom'];
+      var targets = document.querySelectorAll('.section-head, .grid > *, .cta-panel > *, .tools > *, .hero-copy > *, .hero-portrait');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle('is-in', entry.isIntersecting);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      targets.forEach(function (el, i) {
+        var idx = Array.prototype.indexOf.call(el.parentNode.children, el);
+        var dir = el.matches('.section-head, .hero h1') ? 'r-text' : dirs[(idx + i) % dirs.length];
+        el.classList.add('reveal', dir);
+        el.style.setProperty('--d', (Math.min(idx, 4) * 0.1) + 's');
+        io.observe(el);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    targets.forEach(function (el, i) {
-      var parent = el.parentNode;
-      var idx = Array.prototype.indexOf.call(parent.children, el);
-      var dir = el.classList.contains('section-head') ? 'r-text' : dirs[(idx + i) % dirs.length];
-      el.classList.add('reveal', dir);
-      el.style.setProperty('--d', (Math.min(idx, 4) * 0.1) + 's');
-      el.addEventListener('animationend', function () {
-        el.classList.remove('reveal', 'is-in', 'r-up', 'r-left', 'r-right', 'r-zoom', 'r-text');
-        el.style.removeProperty('--d');
-      }, { once: true });
-      io.observe(el);
+    }
+
+    // Button ripple from the click point
+    document.querySelectorAll('.btn').forEach(function (b) {
+      b.addEventListener('pointerdown', function (e) {
+        var r = b.getBoundingClientRect();
+        var s = document.createElement('span');
+        s.className = 'ripple';
+        s.style.left = (e.clientX - r.left) + 'px';
+        s.style.top = (e.clientY - r.top) + 'px';
+        b.appendChild(s);
+        setTimeout(function () { s.remove(); }, 700);
+      });
     });
+
+    // Nav links lean toward the cursor as it approaches
+    var navLinks = document.querySelectorAll('.nav-links a');
+    if (fine && navLinks.length) {
+      var RANGE = 120;
+      document.addEventListener('pointermove', function (e) {
+        navLinks.forEach(function (a) {
+          var r = a.getBoundingClientRect();
+          var dx = e.clientX - (r.left + r.width / 2);
+          var dy = e.clientY - (r.top + r.height / 2);
+          var k = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / RANGE);
+          a.style.translate = (dx * 0.2 * k).toFixed(1) + 'px ' + (dy * 0.2 * k).toFixed(1) + 'px';
+          a.style.scale = (1 + 0.1 * k).toFixed(3);
+        });
+      });
+      document.documentElement.addEventListener('pointerleave', function () {
+        navLinks.forEach(function (a) { a.style.translate = ''; a.style.scale = ''; });
+      });
+    }
   })();
 
   // Contact form: send to Formspree
