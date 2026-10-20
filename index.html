@@ -120,12 +120,23 @@ body::before {
 .nav-links a { font: 500 12px/1.4 var(--font-head); letter-spacing: 0.05em; color: var(--fg-2); transition: color .2s; }
 .nav-links a:hover { color: var(--primary-soft); }
 .nav-cta { display: none; }
-.menu-btn { background: none; border: 0; padding: 8px; margin-right: -8px; }
-.mobile-menu { display: none; flex-direction: column; gap: 4px; padding: 8px 0 16px; border-top: 1px solid var(--line); }
-.mobile-menu.open { display: flex; }
-.mobile-menu a { padding: 10px 4px; color: var(--fg-2); }
-.mobile-menu .btn { margin-top: 8px; }
-@media (min-width: 900px) {
+/* Menu icon button: a bordered square that lights up when the menu is open */
+.menu-btn { width: 44px; height: 44px; flex: 0 0 auto; display: grid; place-items: center; font-size: 24px; color: var(--fg); background: var(--surface-low); border: 1px solid var(--line-strong); border-radius: 12px; cursor: pointer; transition: border-color .2s, color .2s, background .2s, transform .15s; }
+.menu-btn:hover { border-color: var(--primary); color: var(--primary-soft); }
+.menu-btn:active { transform: scale(.92); }
+.menu-btn[aria-expanded="true"] { border-color: var(--primary); color: var(--primary-soft); background: rgba(91, 91, 247, .14); }
+/* Dropdown panel with the menu labels inside */
+.mobile-menu { display: none; flex-direction: column; gap: 4px; margin: 0 0 14px; padding: 10px; background: var(--surface-low); border: 1px solid var(--line-strong); border-radius: 16px; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .6); }
+.mobile-menu.open { display: flex; animation: menuIn .35s cubic-bezier(.2, .7, .2, 1); }
+@keyframes menuIn { from { opacity: 0; transform: translateY(-8px) scale(.98); } to { opacity: 1; transform: none; } }
+.mobile-menu a:not(.btn) { display: flex; justify-content: space-between; align-items: center; padding: 14px; border-radius: 10px; color: var(--fg); font: 600 15px/1.2 var(--font-head); transition: background .2s, color .2s, padding .25s; }
+.mobile-menu a:not(.btn)::after { content: "\2192"; color: var(--primary-soft); opacity: .5; transition: opacity .2s, transform .25s; }
+.mobile-menu a:not(.btn):hover, .mobile-menu a:not(.btn):focus-visible { background: rgba(91, 91, 247, .14); color: var(--primary-soft); padding-left: 20px; }
+.mobile-menu a:not(.btn):hover::after { opacity: 1; transform: translateX(4px); }
+.mobile-menu .btn { margin: 8px 4px 4px; justify-content: center; }
+/* The nav switches by the width of the page area, so the Mobile preview shows the menu button too */
+.stage { container-type: inline-size; }
+@container (min-width: 900px) {
   .nav-links, .nav-cta { display: flex; }
   .menu-btn { display: none; }
   .mobile-menu { display: none !important; }
