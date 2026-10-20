@@ -178,6 +178,17 @@ body::before {
 
 /* Image placeholders (CSP blocks remote photos in artifacts) */
 .photo { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, #2a2a5a, #13131b 55%, #0d3a48); }
+.thumb.cert img { object-fit: contain; background: #13131b; padding: 6px; }
+.thumb.cert:hover img { transform: none; }
+.contact-form { width: 100%; max-width: 560px; margin: 0 auto; display: grid; gap: 14px; text-align: left; background: var(--surface-low); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 20px; }
+.contact-form[hidden] { display: none; }
+.contact-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+.contact-form input, .contact-form select, .contact-form textarea { width: 100%; font-family: inherit; font-size: 15px; color: inherit; background: #13131b; border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px 12px; }
+.contact-form textarea { resize: vertical; }
+.contact-form input:focus-visible, .contact-form select:focus-visible, .contact-form textarea:focus-visible { outline: 2px solid #00D9FF; outline-offset: 1px; }
+.cf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cf-note { margin: 0; font-size: 14px; }
+@media (max-width: 600px) { .cf-grid { grid-template-columns: 1fr; } }
 .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(91,91,247,.35), rgba(0,217,255,.15)); mix-blend-mode: overlay; }
 .photo-label { position: absolute; left: 14px; bottom: 12px; z-index: 1; font: 600 11px/1.3 var(--font-head); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-2); }
 .about-grid { display: grid; gap: 40px; align-items: center; grid-template-columns: minmax(0, 1fr); }
@@ -390,8 +401,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
     <div class="grid g-3">
       <article class="card hoverable svc"><div><div class="row-meta"><span class="mono c-primary" style="font-size:12px">01</span><span class="material-symbols-outlined c-cyan fill">design_services</span></div><h3 style="margin-top:16px">Web design</h3><p>UI/UX, responsive layouts, landing pages, design systems, and high-conversion interfaces.</p><div class="skill-tags"><span class="chip c-cyan">UI/UX</span><span class="chip c-cyan">Figma</span></div></div><a class="more" href="#contact">Explore service <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a></article>
       <article class="card hoverable svc"><div><div class="row-meta"><span class="mono c-primary" style="font-size:12px">02</span><span class="material-symbols-outlined c-cyan fill">support_agent</span></div><h3 style="margin-top:16px">Executive virtual assistance</h3><p>Digital organization, admin support, task coordination, calendar management, and streamlined executive operations.</p><div class="skill-tags"><span class="chip c-cyan">Operations</span><span class="chip c-cyan">Admin</span></div></div><a class="more" href="#contact">Explore service <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a></article>
-      <article class="card hoverable svc"><div><div class="row-meta"><span class="mono c-primary" style="font-size:12px">03</span><span class="material-symbols-outlined c-cyan fill">bolt</span></div><h3 style="margin-top:16px">Facebook automation</h3><p>Workflow automation, page management, process optimization, and automated social interaction pipelines.</p><div class="skill-tags"><span class="chip c-cyan">Automation</span><span class="chip c-cyan">FBA</span></div></div><a class="more" href="#contact">Explore service <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a></article>
-      <article class="card hoverable svc"><div><div class="row-meta"><span class="mono c-primary" style="font-size:12px">04</span><span class="material-symbols-outlined c-cyan fill">security</span></div><h3 style="margin-top:16px">Account recovery assistance</h3><p>Account assessment, recovery guidance, and official recovery processes. Ethical guidance only.</p><div class="skill-tags"><span class="chip c-cyan">Security</span><span class="chip c-cyan">Guidance</span></div></div><a class="more" href="#contact">Explore service <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a></article>
+      <article class="card hoverable svc"><div><div class="row-meta"><span class="mono c-primary" style="font-size:12px">03</span><span class="material-symbols-outlined c-cyan fill">security</span></div><h3 style="margin-top:16px">Account recovery assistance</h3><p>Account assessment, recovery guidance, and official recovery processes. Ethical guidance only.</p><div class="skill-tags"><span class="chip c-cyan">Security</span><span class="chip c-cyan">Guidance</span></div></div><a class="more" href="#contact">Explore service <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span></a></article>
     </div>
   </div>
 </section>
@@ -403,7 +413,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       <div class="card"><h3 class="h-sm c-cyan">Web design</h3><div class="skill-tags"><span>UI/UX design</span><span>Responsive layouts</span><span>Landing pages</span><span>Design systems</span></div></div>
       <div class="card"><h3 class="h-sm c-cyan">Executive virtual assistance</h3><div class="skill-tags"><span>Digital organization</span><span>Admin support</span><span>Task coordination</span><span>Calendar ops</span></div></div>
       <div class="card"><h3 class="h-sm c-cyan">Facebook automation</h3><div class="skill-tags"><span>Workflow automation</span><span>Page management</span><span>Process optimization</span></div></div>
-      <div class="card"><h3 class="h-sm c-cyan">AI &amp; workflow</h3><div class="skill-tags"><span>Claude AI</span><span>Prompt engineering</span><span>AI-assisted workflows</span></div></div>
+      <div class="card"><h3 class="h-sm c-cyan">AI-assisted</h3><div class="skill-tags"><span>AI-assisted workflows</span><span>AI-assisted research</span><span>AI-assisted content</span></div></div>
       <div class="card" style="grid-column:1/-1"><h3 class="h-sm c-cyan">Digital problem solving</h3><div class="skill-tags"><span>Account assessment</span><span>Recovery guidance</span><span>Systems optimization</span><span>Cross-platform sync</span></div></div>
     </div>
     <div class="tools"><span><span class="material-symbols-outlined c-primary">brush</span>Figma</span><span><span class="material-symbols-outlined c-cyan">image</span>Adobe Photoshop</span><span><span class="material-symbols-outlined c-violet">palette</span>Canva</span><span><span class="material-symbols-outlined c-primary">smart_toy</span>Claude AI</span><span><span class="material-symbols-outlined c-cyan">memory</span>AI workflow tools</span></div>
@@ -440,14 +450,14 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       <div class="row-meta"><span class="label c-cyan">Website design</span></div>
       </article>
       <article class="card hoverable work">
-        <div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#0d3a48,#13131b 60%,#1f1f48)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="thumbs">
+        <button class="thumb" type="button" data-sample-src="eva-samples/eva-calendar-month.jpg" data-sample-alt="EVA calendar management: month view" aria-label="View EVA calendar month view full size"><img src="eva-samples/eva-calendar-month.jpg" alt="EVA calendar management month view preview" loading="lazy"><span>Month view</span></button>
+        <button class="thumb" type="button" data-sample-src="eva-samples/eva-calendar-week.jpg" data-sample-alt="EVA calendar management: week view" aria-label="View EVA calendar week view full size"><img src="eva-samples/eva-calendar-week.jpg" alt="EVA calendar management week view preview" loading="lazy"><span>Week view</span></button>
+        <button class="thumb" type="button" data-sample-src="eva-samples/eva-event-weekly-meeting.jpg" data-sample-alt="EVA meeting scheduling: weekly team meeting" aria-label="View EVA weekly team meeting event full size"><img src="eva-samples/eva-event-weekly-meeting.jpg" alt="EVA weekly team meeting event preview" loading="lazy"><span>Meeting</span></button>
+        <button class="thumb" type="button" data-sample-src="eva-samples/eva-event-workout.jpg" data-sample-alt="EVA calendar management: personal workout event" aria-label="View EVA personal workout event full size"><img src="eva-samples/eva-event-workout.jpg" alt="EVA personal workout event preview" loading="lazy"><span>Workout</span></button>
+        </div>
       <div class="row-meta"><span class="label c-violet">EVA</span></div>
       </article>
-      <article class="card hoverable work">
-        <div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#1f1f48,#13131b 60%,#2a1a4a)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div>
-      <div class="row-meta"><span class="label c-primary">Account recovery</span></div>
-      </article>
-      <article class="card hoverable work"><div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#0d3a48,#13131b 60%,#2a1a4a)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div><div class="row-meta"><span class="label c-cyan">Facebook automation</span></div></article>
       
             </div>
       </div>
@@ -457,9 +467,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
   <div class="wrap">
     <div class="section-head" style="margin-bottom:24px"><h2 class="h-md">Certifications</h2></div>
     <div class="grid g-3">
-      <article class="card hoverable work"><div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#0d3a48,#13131b 60%,#1f1f48)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div><div class="row-meta"><span class="label c-cyan">Web design certifications</span></div></article>
-      <article class="card hoverable work"><div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#2a1a4a,#13131b 60%,#1f1f48)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div><div class="row-meta"><span class="label c-violet">EVA certifications</span></div></article>
-      <article class="card hoverable work"><div class="photo" style="aspect-ratio:4/3;background:linear-gradient(135deg,#1f1f48,#13131b 60%,#2a1a4a)"><div class="mockup-lines"><i></i><i></i><i></i><i></i><i></i></div></div><div class="row-meta"><span class="label c-primary">Account recovery certifications</span></div></article>
+      <article class="card hoverable work"><div class="thumbs"><button class="thumb cert" type="button" data-sample-src="certs/eva-certificate.jpg" data-sample-alt="ProVA Executive Assistant Intensive Online Course certificate" aria-label="View EVA Executive Assistant certificate full size"><img src="certs/eva-certificate.jpg" alt="ProVA Executive Assistant certificate preview" loading="lazy"><span>EVA</span></button><button class="thumb cert" type="button" data-sample-src="certs/gva-certificate.jpg" data-sample-alt="ProVA General Virtual Assistant Training certificate" aria-label="View GVA General Virtual Assistant certificate full size"><img src="certs/gva-certificate.jpg" alt="ProVA General Virtual Assistant certificate preview" loading="lazy"><span>GVA</span></button></div><div class="row-meta"><span class="label c-violet">EVA certifications</span></div></article>
     </div>
   </div>
 </section>
@@ -510,7 +518,25 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       <button class="btn" type="button" data-email-toggle aria-expanded="false" aria-controls="email-panel">Start a conversation →</button>
       <a class="btn btn-ghost" href="#projects">View my work →</a>
     </div>
-    <div id="email-panel" hidden style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;background:var(--surface-low);border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:12px 16px;font-size:15px"><span class="muted">Email me at</span><strong id="email-text" style="font-family:var(--font-head);user-select:all">contact@example.com</strong><button class="btn btn-ghost" type="button" data-copy>Copy</button></div>
+    <form id="email-panel" class="contact-form" hidden novalidate action="https://script.google.com/macros/s/AKfycbwYONpxhFcOJ-L1-xJYUKSB_SMKvmgBoOMTT5UF7UyUp9MQy2WD4gX-ct3v7OcWBJk/exec" method="POST">
+      <div class="cf-grid">
+        <label>Your name<input name="name" type="text" required autocomplete="name" placeholder="Your name"></label>
+        <label>Your email<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+      </div>
+      <label>Service you need
+        <select name="service" required>
+          <option value="">Choose a service</option>
+          <option>Web design</option>
+          <option>Executive virtual assistance</option>
+          <option>Account recovery assistance</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>What do you need?<textarea name="message" rows="4" required placeholder="Tell me about your project or task"></textarea></label>
+      <button class="btn" type="submit">Send message</button>
+      <p id="cf-status" class="cf-note" role="status" aria-live="polite"></p>
+      <p class="muted cf-note">If the message does not go through, email me at <strong id="email-text">jamesivanrecover@gmail.com</strong>.</p>
+    </form>
     <div class="links"><a href="https://www.facebook.com/poc.haccoo.2025" target="_blank" rel="noopener">Facebook</a></div>
   </div>
 </section>
@@ -619,7 +645,29 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       var show = emailPanel.hidden;
       emailPanel.hidden = !show;
       emailBtn.setAttribute('aria-expanded', show ? 'true' : 'false');
-      if (show && copyBtn) copyBtn.focus();
+      if (show) { var firstField = emailPanel.querySelector('input'); if (firstField) firstField.focus(); }
+    });
+  }
+  // Contact form: send to Formspree
+  var contactForm = document.getElementById('email-panel');
+  var cfStatus = document.getElementById('cf-status');
+  if (contactForm && cfStatus) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!contactForm.reportValidity()) return;
+      var d = new FormData(contactForm);
+      cfStatus.textContent = 'Sending…';
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+      fetch(contactForm.action, { method: 'POST', mode: 'no-cors', body: d })
+        .then(function () {
+          cfStatus.textContent = 'Thanks! Your message was sent. I will get back to you soon.';
+          contactForm.reset();
+        })
+        .catch(function () {
+          cfStatus.textContent = 'The message could not be sent. Please email me directly at the address below.';
+        })
+        .then(function () { if (submitBtn) submitBtn.disabled = false; });
     });
   }
   function selectEmail() {
