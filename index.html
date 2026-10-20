@@ -182,6 +182,9 @@ body::before {
 .thumb.cert:hover img { transform: none; }
 
 /* Motion: scroll reveal in both directions, hero intro, button ripple, nav magnet. Runs only when JS runs and motion is allowed. */
+/* Keep elements that are still off to the side from widening the page on phones */
+html { overflow-x: hidden; }
+html { overflow-x: clip; }
 .js-reveal .reveal {
   opacity: 0;
   translate: 0 34px;
