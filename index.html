@@ -125,6 +125,15 @@ body::before {
 .menu-btn:hover { border-color: var(--primary); color: var(--primary-soft); }
 .menu-btn:active { transform: scale(.92); }
 .menu-btn[aria-expanded="true"] { border-color: var(--primary); color: var(--primary-soft); background: rgba(91, 91, 247, .14); }
+/* Three drawn lines (no icon font needed) that turn into an X when the menu is open */
+.burger { position: relative; display: block; width: 20px; height: 14px; }
+.burger i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform .35s cubic-bezier(.2, .7, .2, 1), opacity .2s ease, top .35s cubic-bezier(.2, .7, .2, 1); }
+.burger i:nth-child(1) { top: 0; }
+.burger i:nth-child(2) { top: 6px; }
+.burger i:nth-child(3) { top: 12px; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
 /* Dropdown panel with the menu labels inside */
 .mobile-menu { display: none; flex-direction: column; gap: 4px; margin: 0 0 14px; padding: 10px; background: var(--surface-low); border: 1px solid var(--line-strong); border-radius: 16px; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .6); }
 .mobile-menu.open { display: flex; animation: menuIn .35s cubic-bezier(.2, .7, .2, 1); }
@@ -355,7 +364,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
       <a href="#about">About</a><a href="#services">Services</a><a href="#skills">Skills</a><a href="#workflow">Workflow</a><a href="#certifications">Certifications</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
     </nav>
     <a class="btn nav-cta" href="#contact">Let's work together</a>
-    <button class="menu-btn material-symbols-outlined" id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">menu</button>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></button>
   </div>
   <div class="mobile-menu wrap" id="mobile-menu">
     <a href="#about">About</a><a href="#services">Services</a><a href="#skills">Skills</a><a href="#workflow">Workflow</a><a href="#certifications">Certifications</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
@@ -621,13 +630,11 @@ footer { border-top: 1px solid var(--line); background: var(--bg); }
   menuBtn.addEventListener('click', function () {
     var open = menu.classList.toggle('open');
     menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menuBtn.textContent = open ? 'close' : 'menu';
   });
   menu.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
       menu.classList.remove('open');
       menuBtn.setAttribute('aria-expanded', 'false');
-      menuBtn.textContent = 'menu';
     });
   });
 
